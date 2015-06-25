@@ -1,0 +1,42 @@
+html {
+	font-family: Arial;
+}
+
+body {
+	margin: 0;
+	background-attachment: fixed;
+	overflow-x: hidden;
+}
+
+#header {
+	background-color: #e6f6f1;
+	width: 100%;
+	padding: 0px;
+	padding-left: 30px;
+	font-size: 65px;
+	opacity: 0.75;
+}
+
+#judul {
+	/*color: #2c9c91;*/
+	z-index: 1;
+}
+
+.content {
+	color: white;
+	background-color: #8BC34A;
+	padding-bottom: 40px;
+}
+
+.headline {
+	padding: 30px;
+	font-size: 40px;
+	text-align: center;
+}
+
+.isi {
+	font-size: 18px;
+	margin-right: 300px;
+	margin-left: 300px;
+	text-align: center;
+}
