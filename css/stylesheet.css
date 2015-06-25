@@ -24,7 +24,6 @@ body {
 
 .content {
 	color: white;
-	background-color: #8BC34A;
 	padding-bottom: 40px;
 }
 
@@ -36,7 +35,29 @@ body {
 
 .isi {
 	font-size: 18px;
-	margin-right: 300px;
-	margin-left: 300px;
-	text-align: center;
+}
+
+.isi a {
+	color: white;
+	text-decoration: underline;
+}
+
+.green {
+	background-color: #8BC34A;	
+}
+
+.red {
+	background-color: #EF5350;	
+}
+
+.blue {
+	background-color: #1E88E5;	
+}
+
+.white {
+	background-color: #FAFAFA;
+}
+
+.black {
+	color: black;
 }

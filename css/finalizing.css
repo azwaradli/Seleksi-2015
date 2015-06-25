@@ -3,3 +3,12 @@
     content: "";
     display: block;
 }
+
+#map_container {
+	padding: 45px;
+}
+
+#country_name {
+	text-align: center;
+	font-size: 2em;
+}

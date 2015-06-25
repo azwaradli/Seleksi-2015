@@ -15,46 +15,115 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
      	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
       <![endif]-->
+      <link rel="stylesheet" type="text/css" href="css/finalizing.css">
+      <script type='text/javascript' src='js/jquery.js'></script>
+      <script type='text/javascript' src='js/charts.js'></script>
+      <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+      <script type='text/javascript'>
+        google.load('visualization', '1', {'packages': ['geochart']});
+        google.load('visualization', '1', {'packages': ['corechart']});
+      google.setOnLoadCallback(function() { drawCO2Map($('#year_slider').val()); drawElecticityRenewableMap($('#year_slider').val()); drawChart("WorldData", ""); });
+      </script>
    	</head>
    	<body background="images/bg.jpg">
     	<div id="header">
     		<span id="judul">Data Visualization</span>
       	</div>
-  		<div class="content">
+  		<div class="content green">
   			<div class="headline">
   				Latar Belakang
   			</div>
-  			<p class="isi">
-  				Polusi sudah bukan menjadi rahasia lagi sebagai masalah pelik yang solusinya masih terus dikaji oleh para ahli. Kebanyakan polusi berasal dari kendaraan bermotor yang merupakan sisa hasil pembakaran bahan bakar fosil. Salah satu inovasi yang sedang dikembangkan untuk mengatasi masalah polusi ini yaitu dengan memanfaatkan energi listrik.<br><br>
-				  Energi listrik sendiri bisa didapatkan dari sumber energi yang terbarukan maupun tidak. Energi terbarukan yang sedang marak – maraknya diperbincangkan yaitu energi yang berasal dari matahari, energi gelombang, energi tekanan arus dasar laut, dll. Dengan energi terbarukan tersebut maka listrik bisa diproduksi tanpa menghasilkan polusi yang besar seperti bagaimana dihasilkan dari sumber energi tak terbarukan.
-  			</p>
-  		</div>
-
-  		<div class="content">
-  			<div class="headline">
-  				Visualization
-  			</div>
-  			<p class="isi">
-  				-- ini tempat chartsnya --
-  			</p>
-  		</div>
-
-      <div class="">
-        <div class="headline">
-          About
+        <div class="row">
+          <div class="col-md-offset-1 col-md-3">
+            <img src="images/pollution.png" width="100%">
+          </div>
+          <div class="col-md-7">
+    			<p class="isi">
+    				Polusi sudah bukan menjadi rahasia lagi sebagai masalah pelik yang solusinya masih terus dikaji oleh para ahli. Kebanyakan polusi berasal dari kendaraan bermotor yang merupakan sisa hasil pembakaran bahan bakar fosil. Salah satu inovasi yang sedang dikembangkan untuk mengatasi masalah polusi ini yaitu dengan memanfaatkan energi listrik.<br><br>
+  				  Energi listrik sendiri bisa didapatkan dari sumber energi yang terbarukan maupun tidak. Energi terbarukan yang sedang marak – maraknya diperbincangkan yaitu energi yang berasal dari matahari, energi gelombang, energi tekanan arus dasar laut, dll. Dengan energi terbarukan tersebut maka listrik bisa diproduksi tanpa menghasilkan polusi yang besar seperti bagaimana dihasilkan dari sumber energi tak terbarukan.
+    			</p>
+          </div>
         </div>
-        <p class="isi">
+  		</div>
 
-        </p>
+  		<div class="content white">
+  			<div class="headline black">
+  				Trend Polusi
+  			</div>
+        <div class="row">
+          <div class="col-md-6">
+				    <div id="columnchart_values"></div>
+          </div>
+          <div class="col-md-5">
+            <p class="isi black">
+              <br><br> 
+              <br>
+              Selama 50 tahun, peningkatan polusi CO2 yang berasal dari kegiatan <b>rumah tangga</b>, <b>komersial</b>, dan <b>industri</b> tidak mengalami peningkatan yang signifikan.
+              <br><br> 
+              Berbeda dengan bidang <b>Transportasi</b>, selama 50 tahun juga, tidak terjadi inovasi yang signifikan setelah kendaraan bermotor bertenaga bahan bakar fosil dikomersialisasi.
+            </p>
+          </div>
+        </div>
+  		</div>
+
+      <div class="content red">
+        <div class="headline">
+          Solusi ?
+        </div>
+        <br>
+        <center><img src="images/model-s.png"></center>
+        <br>
+        <br>
+        <div class="row">
+          <div class="col-md-offset-2 col-md-8">
+            <center><p class="isi">
+              <a href="http://waitbutwhy.com/2015/06/how-tesla-will-change-your-life.html">Wait, but</a> tidak semua negara menghasilkan listrik dari tenaga yang terbarukan!<br>Beberapa negara tidak dipungkiri, belum siap untuk berpindah ke kendaraan listrik karena tidak tersedianya pembangkit yang bebas polusi, dengan berpindahnya kendaraan malah bisa menimbulkan masalah polusi yang lebih besar.
+            </p></center>
+          </div>
+        </div>
       </div>
 
   		<div class="content">
-  			<div class="headline">
-  				About
-  			</div>
-  			<p class="isi">
+        <br><br>
+        <div class="row">
+          <div class="col-md-6">
+            <center>Tingkat Polusi dari Kendaraan Bermotor</center>
+          </div>
+          <div class="col-md-6">
+            <center>Energi Listrik dari Energi Terbarukan</center>
+          </div>
+        </div>
 
-  			</p>
+        <div id="map_container">
+          <div id="chartCO2" style="float: left; width: 45vw;"></div>
+          <div id="chartElectric" style="float: left; width: 45vw;"></div>
+          <div style="clear: both;"></div>
+        </div>
+
+        <br><br>
+        <div class="row">
+          <div class="col-md-12">
+            <div id="country_name"><center></center></div>
+          </div>
+        </div>
+
+        <div id="map_container">
+          <div id="piechart_CO2" style="float: left; width: 45vw;"></div>
+          <div id="piechart_Elec" style="float: left; width: 45vw;"></div>
+          <div style="clear: both;"></div>
+        </div>
+
+        <form>
+          <input  type="hidden" id="year_slider" name="year_slider" min="1960" max="2014" value="2011" oninput="this.form.year_showing.value=this.value; drawCO2Map($('#year_slider').val()); drawElecticityRenewableMap($('#year_slider').val());" />
+          <input  type="hidden" name="year_showing" min="1960" max="2014" value="2011" oninput="this.form.year_slider.value=this.value; drawCO2Map($('#year_slider').val()); drawElecticityRenewableMap($('#year_slider').val());" />
+
+          <!--
+          <select id="dataset" onchange="drawMarkersMap($('#year_slider').val(), $('#dataset').val());">
+            <option value="CO2EmissionTransportation">CO2 Emmision from Transportation</option>
+            <option value="ElectricityByRenewable">Electricity By Renewable</option>
+        
+          </select>-->
+        </form>
   		</div>
 
 	<!-- AKHIR CONTENT - dari sini kebawah jgn dihapus -->
