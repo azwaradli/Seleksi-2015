@@ -1,6 +1,6 @@
 <html>
   <head>
-    <script type='text/javascript' src='/js/jquery.js'></script>
+    <script type='text/javascript' src='js/jquery.js'></script>
     <script type='text/javascript' src='https://www.google.com/jsapi'></script>
     <script type='text/javascript'>
       google.load('visualization', '1', {'packages': ['geochart']});
@@ -13,7 +13,7 @@
           $.ajax({
               'async': false,
               'global': false,
-              'url': "/dataset/" + dataset,
+              'url': "dataset/" + dataset,
               'dataType': "json",
               'success': function (data) {
                   json = data;
