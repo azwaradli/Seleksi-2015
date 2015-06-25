@@ -1,0 +1,33 @@
+#header {
+	background-color: #e6f6f1;
+	width: 100%;
+	padding-left: 30px;
+	padding-bottom: 0;
+	font-size: 65px;
+	opacity: 0.4;
+}
+
+#judul {
+	/*color: #2c9c91;*/
+	z-index: 1;
+}
+
+.content {
+	color: white;
+	/*background-color: #81ea9d;*/
+	padding-bottom: 40px;
+}
+
+.headline {
+	margin-top: 30px;
+	padding: 30px;
+	font-size: 40px;
+	text-align: center;
+}
+
+.isi {
+	font-size: 20px;
+	margin-right: 300px;
+	margin-left: 300px;
+	text-align: center;
+}
