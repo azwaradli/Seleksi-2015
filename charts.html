@@ -70,7 +70,8 @@
           if (selectedItem) {
             var value = data.getValue(selectedItem.row, 0);
             //alert('The user selected ' + value);
-            drawCO2Pie("2011", value);
+            drawElectricPie(year, value);
+            drawCO2Pie(year, value);
           }
         }
       }
@@ -255,6 +256,49 @@
         chart.draw(data, options);
       }
 
+      function drawElectricPie(year, country) {
+        /* Ambil data */
+        var json = (function() {
+          var json = null;
+          $.ajax({
+              'async': false,
+              'global': false,
+              'url': "dataset/PieChartElectric.json",
+              'dataType': "json",
+              'success': function (data) {
+                  json = data;
+              }
+          });
+            return json;
+        })();
+
+        var result = [];
+
+        json.forEach( function(entry) {
+          var n = 0;
+
+          if ( (entry["Country"] == country) && (entry[year] != "") && (entry[year] != null) ) {
+            result.push(["Non-Renewable", parseFloat(entry[year])]);
+            result.push(["Renewable", 100-parseFloat(entry[year])]);
+          }
+
+        });
+
+        /* */
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Source');
+        data.addColumn('number', 'Emission');
+        data.addRows(result);
+
+        var options = {
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_Elec'));
+        chart.draw(data, options);
+      }
+
+
+
     </script>
   </head>
   <body>
@@ -264,7 +308,12 @@
       <div style="clear: both;"></div>
     </div>
 
-      <div id="piechart_CO2" style="width: 45vw;"></div>
+    <div id="map_container">
+      <div id="piechart_CO2" style="float: left; width: 45vw;"></div>
+      <div id="piechart_Elec" style="float: left; width: 45vw;"></div>
+      <div style="clear: both;"></div>
+    </div>
+
     <form>
       <input hidden type="range" id="year_slider" name="year_slider" min="1960" max="2014" value="2011" oninput="this.form.year_showing.value=this.value; drawCO2Map($('#year_slider').val()); drawElecticityRenewableMap($('#year_slider').val());" />
       <input hidden type="number" name="year_showing" min="1960" max="2014" value="2011" oninput="this.form.year_slider.value=this.value; drawCO2Map($('#year_slider').val()); drawElecticityRenewableMap($('#year_slider').val());" />
