@@ -1,19 +1,29 @@
 <html>
   <head>
-    <script type='text/javascript' src='/js/jquery.js'></script>
+    <link rel="stylesheet" type="text/css" href="css/finalizing.css">
+    <script type='text/javascript' src='js/jquery.js'></script>
     <script type='text/javascript' src='https://www.google.com/jsapi'></script>
     <script type='text/javascript'>
       google.load('visualization', '1', {'packages': ['geochart']});
-      google.setOnLoadCallback(function() { drawMarkersMap("2014", $('#dataset').val() + ".json"); });
+      google.load('visualization', '1', {'packages': ['corechart']});
+      google.setOnLoadCallback(function() { drawCO2Map($('#year_slider').val()); drawElecticityRenewableMap($('#year_slider').val()); drawChart("WorldData", ""); });
 
-      function drawMarkersMap(year, dataset) {
+      function drawCO2Map(year) {
+        drawMarkersMap(year, "CO2EmissionTransportation", "chartCO2", "green", "#a70d15", "CO2 Emission from Transport (MMT)");
+      }
 
+      function drawElecticityRenewableMap(year) {
+        drawMarkersMap(year, "ElectricityByRenewable", "chartElectric", "brown", "yellow", "Renewable Electricity (GWh)");
+      }
+
+      function drawMarkersMap(year, dataset, div, colorOne, colorTwo, text) {
+        /* Ambil data */
         var json = (function() {
           var json = null;
           $.ajax({
               'async': false,
               'global': false,
-              'url': "/dataset/" + dataset,
+              'url': "dataset/" + dataset + ".json",
               'dataType': "json",
               'success': function (data) {
                   json = data;
@@ -22,46 +32,252 @@
             return json;
         })();
 
-        /* Configurator */
         var country = "Country";
 
         var result = [];
 
         json.forEach( function(entry) {
           var n = 0;
-          if (entry[year] != "") {
+          if ( (entry[year] != "") && (entry[year] != null) ) {
             n = entry[year];
-          }
 
-          result.push([entry[country], n]);
+            if ( dataset == "ElectricityByRenewable" ) {
+              n = n / 1000000;
+            }
+
+    			  result.push([entry[country], n]);
+          }
         });
+        /* */
 
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Country');
+        data.addColumn('number', text);
+        data.addRows(result);
+
+        var options = {
+          colorAxis: {colors: [colorOne, colorTwo]}
+        };
+
+        var chart = new google.visualization.GeoChart(document.getElementById(div));
+        chart.draw(data, options);
+
+        google.visualization.events.addListener(chart, 'select', selectHandler);
+
+        function selectHandler(e) { 
+          var selectedItem = chart.getSelection()[0];
+          console.log(selectedItem.column);
+          if (selectedItem) {
+            var value = data.getValue(selectedItem.row, 0);
+            //alert('The user selected ' + value);
+            drawCO2Pie("2011", value);
+          }
+        }
+      }
+	  
+  	  function drawChart(dataset, type) {
+        /* Ambil data */
+        var json = (function() {
+          var json = null;
+          $.ajax({
+              'async': false,
+              'global': false,
+              'url': "dataset/" + dataset + ".json",
+              'dataType': "json",
+              'success': function (data) {
+                  json = data;
+              }
+          });
+            return json;
+        })();
+
+        var totalEmission = [];
+        var RCEmission = [];
+        var IEmission = [];
+        var EEmission = [];
+        var OEmission = [];
+        var result = [];
+
+        json.forEach( function(entry) {
+          var n = 0;
+          if ( entry["Indicator Code"] == "EN.ATM.CO2E.KT" ) {
+            for ( i = 1960; i <= 2014; ++i ) {
+              n = i.toString();
+
+              if ( (entry[n] != "") && (entry[n] != null) ) {
+                totalEmission.push(parseFloat(entry[n]));
+              } else {
+                totalEmission.push(null);                
+              }
+            }
+          } else if ( entry["Indicator Code"] == "EN.CO2.BLDG.MT" ) {
+            for ( i = 1960; i <= 2014; ++i ) {
+              n = i.toString();
+
+              if ( (entry[n] != "") && (entry[n] != null) ) {
+                RCEmission.push(parseFloat(entry[n])*1000);
+              } else {
+                RCEmission.push(null);                
+              }
+            }
+          } else if ( entry["Indicator Code"] == "EN.CO2.ETOT.MT" ) {
+            for ( i = 1960; i <= 2014; ++i ) {
+              n = i.toString();
+
+              if ( (entry[n] != "") && (entry[n] != null) ) {
+                EEmission.push(parseFloat(entry[n])*1000);
+              } else {
+                EEmission.push(null);                
+              }
+            }
+          } else if ( entry["Indicator Code"] == "EN.CO2.MANF.MT" ) {
+            for ( i = 1960; i <= 2014; ++i ) {
+              n = i.toString();
+
+              if ( (entry[n] != "") && (entry[n] != null) ) {
+                IEmission.push(parseFloat(entry[n])*1000);
+              } else {
+                IEmission.push(null);                
+              }
+            }
+          } else if ( entry["Indicator Code"] == "EN.CO2.OTHX.MT" ) {
+            for ( i = 1960; i <= 2014; ++i ) {
+              n = i.toString();
+
+              if ( (entry[n] != "") && (entry[n] != null) ) {
+                OEmission.push(parseFloat(entry[n])*1000);
+              } else {
+                OEmission.push(null);                
+              }
+            }
+          } else if ( entry["Indicator Code"] == "EN.CO2.TRAN.MT" ) {
+            for ( i = 1960; i <= 2014; ++i ) {
+              n = i.toString();
+
+              if ( (entry[n] != "") && (entry[n] != null) ) {
+                if ( totalEmission[i-1960] != null ) {
+                  result.push([n, totalEmission[i-1960], (parseFloat(entry[n])*1000), RCEmission[i-1960], EEmission[i-1960], IEmission[i-1960], OEmission[i-1960]]);
+                }
+              }
+            }
+          }
+        });
+
+        /* */
+
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Year');
+        data.addColumn('number', 'Total Emission');
+        data.addColumn('number', 'Transportation Emission');
+        data.addColumn('number', 'Residential-Commercial Emission');
+        data.addColumn('number', 'Electricity Generation Emission');
+        data.addColumn('number', 'Industrial Emission');
+        data.addColumn('number', 'Other Emission');
+        data.addRows(result);
+
+        var options = {
+          width: 600,
+          height: 400,
+          bar: {groupWidth: "95%"},
+          legend: { position: "none" },
+          vAxis: { title: 'Emission (million metric tons)', textPosition: 'none', },
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('columnchart_values'));
+        chart.draw(data, options);
+
+      }
+
+      function drawCO2Pie(year, country) {
+        /* Ambil data */
+        var json = (function() {
+          var json = null;
+          $.ajax({
+              'async': false,
+              'global': false,
+              'url': "dataset/PieChartCO2.json",
+              'dataType': "json",
+              'success': function (data) {
+                  json = data;
+              }
+          });
+            return json;
+        })();
+
+        var result = [];
+
+        json.forEach( function(entry) {
+          var n = 0;
+          
+          if ( entry["Indicator Code"] == "EN.CO2.BLDG.MT" ) {
+
+              if ( (entry["Country"] == country) && (entry[year] != "") && (entry[year] != null) ) {
+                result.push(["Residential-Commercial", parseFloat(entry[year])]);
+              }
+
+          } else if ( entry["Indicator Code"] == "EN.CO2.ETOT.MT" ) {
+
+              if ( (entry["Country"] == country) && (entry[year] != "") && (entry[year] != null) ) {
+                result.push(["Electricity", parseFloat(entry[year])]);
+              }
+
+          } else if ( entry["Indicator Code"] == "EN.CO2.MANF.MT" ) {
+
+              if ( (entry["Country"] == country) && (entry[year] != "") && (entry[year] != null) ) {
+                result.push(["Industrial", parseFloat(entry[year])]);
+              }
+
+          } else if ( entry["Indicator Code"] == "EN.CO2.OTHX.MT" ) {
+
+              if ( (entry["Country"] == country) && (entry[year] != "") && (entry[year] != null) ) {
+                result.push(["Other", parseFloat(entry[year])]);
+              }
+
+          } else if ( entry["Indicator Code"] == "EN.CO2.TRAN.MT" ) {
+
+              if ( (entry["Country"] == country) && (entry[year] != "") && (entry[year] != null) ) {
+                result.push(["Transportation", parseFloat(entry[year])]);
+              }
+
+          }
+        });
+
+        /* */
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Source');
         data.addColumn('number', 'Emission');
         data.addRows(result);
 
         var options = {
-          colorAxis: {colors: ['green', 'blue']}
         };
 
-        var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_CO2'));
         chart.draw(data, options);
-      };
+      }
+
     </script>
   </head>
   <body>
-    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+    <div id="map_container">
+      <div id="chartCO2" style="float: left; width: 45vw;"></div>
+      <div id="chartElectric" style="float: left; width: 45vw;"></div>
+      <div style="clear: both;"></div>
+    </div>
 
+      <div id="piechart_CO2" style="width: 45vw;"></div>
     <form>
-      <input type="range" id="year_slider" name="year_slider" min="1960" max="2014" value="2014" oninput="this.form.year_showing.value=this.value; drawMarkersMap($('#year_slider').val(), $('#dataset').val() + '.json');" />
-      <input type="number" name="year_showing" min="1960" max="2014" value="2014" oninput="this.form.year_slider.value=this.value; drawMarkersMap($('#year_slider').val(), $('#dataset').val() + '.json');" />
+      <input hidden type="range" id="year_slider" name="year_slider" min="1960" max="2014" value="2011" oninput="this.form.year_showing.value=this.value; drawCO2Map($('#year_slider').val()); drawElecticityRenewableMap($('#year_slider').val());" />
+      <input hidden type="number" name="year_showing" min="1960" max="2014" value="2011" oninput="this.form.year_slider.value=this.value; drawCO2Map($('#year_slider').val()); drawElecticityRenewableMap($('#year_slider').val());" />
 
-      <select id="dataset" onchange="drawMarkersMap($('#year_slider').val(), $('#dataset').val() + '.json');">
+      <!--
+      <select id="dataset" onchange="drawMarkersMap($('#year_slider').val(), $('#dataset').val());">
         <option value="CO2EmissionTransportation">CO2 Emmision from Transportation</option>
         <option value="ElectricityByRenewable">Electricity By Renewable</option>
-      </select>
+		
+      </select>-->
     </form>
+
+    <div id="columnchart_values" style="width: 900px; height: 500px;"></div>
 
   </body>
     
