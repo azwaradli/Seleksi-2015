@@ -1,68 +1,57 @@
-<html>
-  <head>
-    <script type='text/javascript' src='/js/jquery.js'></script>
-    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
-    <script type='text/javascript'>
-      google.load('visualization', '1', {'packages': ['geochart']});
-      google.setOnLoadCallback(function() { drawMarkersMap("2014", $('#dataset').val() + ".json"); });
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Seleksi Warga BasDat</title>
 
-      function drawMarkersMap(year, dataset) {
+      <!-- Bootstrap -->
+      <link href="css/bootstrap.min.css" rel="stylesheet">
+      <link type="text/css" rel="stylesheet" href="css/stylesheet.css">
+      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+      <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+     	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+   	</head>
+   	<body background="images/bg.jpg">
+    	<div id="header">
+    		<p id="judul">Data Visualization</p>
+      	</div>
+  		<div class="content">
+  			<p class="headline">
+  				Latar Belakang
+  			</p>
+  			<p class="isi">
+  				Polusi sudah bukan menjadi rahasia lagi sebagai masalah pelik yang solusinya masih terus dikaji oleh para ahli. Kebanyakan polusi berasal dari kendaraan bermotor yang merupakan sisa hasil pembakaran bahan bakar fosil. Salah satu inovasi yang sedang dikembangkan untuk mengatasi masalah polusi ini yaitu dengan memanfaatkan energi listrik.<br><br>
+				Energi listrik sendiri bisa didapatkan dari sumber energi yang terbarukan maupun tidak. Energi terbarukan yang sedang marak – maraknya diperbincangkan yaitu energi yang berasal dari matahari, energi gelombang, energi tekanan arus dasar laut, dll. Dengan energi terbarukan tersebut maka listrik bisa diproduksi tanpa menghasilkan polusi yang besar seperti bagaimana dihasilkan dari sumber energi tak terbarukan.
+  			</p>
+  		</div>
 
-        var json = (function() {
-          var json = null;
-          $.ajax({
-              'async': false,
-              'global': false,
-              'url': "/dataset/" + dataset,
-              'dataType': "json",
-              'success': function (data) {
-                  json = data;
-              }
-          });
-            return json;
-        })();
+  		<div class="content">
+  			<p class="headline">
+  				Visualization
+  			</p>
+  			<p class="isi">
+  				-- ini tempat chartsnya --
+  			</p>
+  		</div>
 
-        /* Configurator */
-        var country = "Country";
+  		<div class="content">
+  			<p class="headline">
+  				About
+  			</p>
+  			<p class="isi">
 
-        var result = [];
+  			</p>
+  		</div>
 
-        json.forEach( function(entry) {
-          var n = 0;
-          if (entry[year] != "") {
-            n = entry[year];
-          }
-
-          result.push([entry[country], n]);
-        });
-
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Country');
-        data.addColumn('number', 'Emission');
-        data.addRows(result);
-
-        var options = {
-          colorAxis: {colors: ['green', 'blue']}
-        };
-
-        var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      };
-    </script>
-  </head>
-  <body>
-    <div id="chart_div" style="width: 900px; height: 500px;"></div>
-
-    <form>
-      <input type="range" id="year_slider" name="year_slider" min="1960" max="2014" value="2014" oninput="this.form.year_showing.value=this.value; drawMarkersMap($('#year_slider').val(), $('#dataset').val() + '.json');" />
-      <input type="number" name="year_showing" min="1960" max="2014" value="2014" oninput="this.form.year_slider.value=this.value; drawMarkersMap($('#year_slider').val(), $('#dataset').val() + '.json');" />
-
-      <select id="dataset" onchange="drawMarkersMap($('#year_slider').val(), $('#dataset').val() + '.json');">
-        <option value="CO2EmissionTransportation">CO2 Emmision from Transportation</option>
-        <option value="ElectricityByRenewable">Electricity By Renewable</option>
-      </select>
-    </form>
-
-  </body>
-    
+	<!-- AKHIR CONTENT - dari sini kebawah jgn dihapus -->
+   	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+   	<script src="js/jquery-1.11.1.min.js"></script>
+   	<!-- Include all compiled plugins (below), or include individual files as needed -->
+   	<script src="js/bootstrap.min.js"></script>
+	</body>
 </html>
