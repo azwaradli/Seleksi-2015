@@ -9,7 +9,7 @@ body {
 }
 
 #header {
-	background-color: #e6f6f1;
+	background-color: #ffebcd;
 	width: 100%;
 	padding: 35px;
 	text-align: center;
@@ -33,13 +33,24 @@ body {
 	text-align: center;
 }
 
+#footer {
+	text-align: right;
+	padding: 5px;
+	margin-bottom: -20px;
+}
+
 .isi {
 	font-size: 18px;
+	text-align: justify;
 }
 
 .isi a {
 	color: white;
 	text-decoration: underline;
+}
+
+em {
+	font-size: 20px;
 }
 
 .green {
@@ -58,6 +69,15 @@ body {
 	background-color: #FAFAFA;
 }
 
+.gray {
+	background-color: #848484;
+}
+
+.pupus {
+	background-color: #cad1a8;
+}
+
 .black {
 	color: black;
+	opacity: 0.75;
 }

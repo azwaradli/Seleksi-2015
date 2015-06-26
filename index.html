@@ -25,7 +25,7 @@
       google.setOnLoadCallback(function() { drawCO2Map($('#year_slider').val()); drawElecticityRenewableMap($('#year_slider').val()); drawChart("WorldData", ""); });
       </script>
    	</head>
-   	<body background="images/bg.jpg">
+   	<body>
     	<div id="header">
     		<span id="judul">Data Visualization</span>
       </div>
@@ -39,7 +39,7 @@
           </div>
           <div class="col-md-7">
     			<p class="isi">
-    				Polusi sudah bukan menjadi rahasia lagi sebagai masalah pelik yang solusinya masih terus dikaji oleh para ahli. Kebanyakan polusi berasal dari kendaraan bermotor yang merupakan sisa hasil pembakaran bahan bakar fosil. Salah satu inovasi yang sedang dikembangkan untuk mengatasi masalah polusi ini yaitu dengan memanfaatkan energi listrik.<br><br>
+    				Polusi sudah bukan rahasia lagi sebagai masalah pelik yang solusinya masih terus dikaji oleh para ahli. Kebanyakan polusi berasal dari kendaraan bermotor yang merupakan sisa hasil pembakaran bahan bakar fosil. Salah satu inovasi yang sedang dikembangkan untuk mengatasi masalah polusi ini yaitu dengan memanfaatkan energi listrik.<br><br>
   				  Energi listrik sendiri bisa didapatkan dari sumber energi yang terbarukan maupun tidak. Energi terbarukan yang sedang marak – maraknya diperbincangkan yaitu energi yang berasal dari matahari, energi gelombang, energi tekanan arus dasar laut, dll. Dengan energi terbarukan tersebut maka listrik bisa diproduksi tanpa menghasilkan polusi yang besar seperti bagaimana dihasilkan dari sumber energi tak terbarukan.
     			</p>
           </div>
@@ -50,7 +50,7 @@
   			<div class="headline black">
   				Trend Polusi
   			</div>
-        <div class="row">
+        <div class="row" style="margin-top: -30px">
           <div class="col-md-6">
 				    <div id="columnchart_values"></div>
           </div>
@@ -75,22 +75,22 @@
         <br>
         <br>
         <div class="row">
-          <div class="col-md-offset-2 col-md-8">
+          <div class="col-md-offset-3 col-md-6">
             <center><p class="isi">
-              <a href="http://waitbutwhy.com/2015/06/how-tesla-will-change-your-life.html">Wait, but</a> tidak semua negara menghasilkan listrik dari tenaga yang terbarukan!<br>Beberapa negara tidak dipungkiri, belum siap untuk berpindah ke kendaraan listrik karena tidak tersedianya pembangkit yang bebas polusi, dengan berpindahnya kendaraan malah bisa menimbulkan masalah polusi yang lebih besar.
+              <a href="http://waitbutwhy.com/2015/06/how-tesla-will-change-your-life.html">Wait, but</a> tidak semua negara menghasilkan listrik dari tenaga yang terbarukan! Beberapa negara tidak dipungkiri, belum siap untuk berpindah ke kendaraan listrik karena tidak tersedianya pembangkit yang bebas polusi, dengan berpindahnya kendaraan malah bisa menimbulkan masalah polusi yang lebih besar.
             </p></center>
           </div>
         </div>
       </div>
 
-  		<div class="content">
+  		<div class="content gray">
         <br><br>
         <div class="row">
           <div class="col-md-6">
-            <center>Tingkat Polusi dari Kendaraan Bermotor</center>
+            <center><em>Tingkat Polusi dari Kendaraan Bermotor</em></center>
           </div>
           <div class="col-md-6">
-            <center>Energi Listrik dari Energi Terbarukan</center>
+            <center><em>Energi Listrik dari Energi Terbarukan</em></center>
           </div>
         </div>
 
@@ -125,6 +125,10 @@
           </select>-->
         </form>
   		</div>
+
+      <div id="footer" class="pupus">
+        <p>Created by <a href="http://www.facebook.com/azwar.adli">Azwar</a> & <a href="http://www.facebook.com/feryandi">Fery</a></p>
+      </div>
 
 	<!-- AKHIR CONTENT - dari sini kebawah jgn dihapus -->
    	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
