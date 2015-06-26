@@ -158,7 +158,6 @@ json.forEach( function(entry) {
 
 /* */
 
-
 var data = new google.visualization.DataTable();
 data.addColumn('string', 'Year');
 //data.addColumn('number', 'Total Emission');
@@ -167,7 +166,6 @@ data.addColumn('number', 'Residential-Commercial Emission');
 //data.addColumn('number', 'Electricity Generation Emission');
 data.addColumn('number', 'Industrial Emission');
 data.addColumn('number', 'Other Emission');
-data.addRows(result);
 
 var options = {
   width: 600,
@@ -176,10 +174,28 @@ var options = {
   legend: { position: "none" },
   vAxis: { title: 'Emission (million metric tons)', textPosition: 'none', gridlines: { color: 'transparent' }, },
   backgroundColor: '#FAFAFA',
-  legend: { position: 'right' }
+  legend: { position: 'right' },
+  animation:{
+    duration: 250,
+    startup: true //This is the new option
+  }
 };
+
+var index = 0;
+var drawChart = function() {
+                    if (index < result.length) {
+                        console.log(result[index]);
+                        data.addRow(result[index++]);
+                        chart.draw(data, options);
+                    }
+                }
+
+
 var chart = new google.visualization.LineChart(document.getElementById('columnchart_values'));
+google.visualization.events.addListener(chart, 'animationfinish', drawChart);
 chart.draw(data, options);
+drawChart();
+
 
 }
 
