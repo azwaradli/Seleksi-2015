@@ -177,14 +177,13 @@ var options = {
   legend: { position: 'right' },
   animation:{
     duration: 250,
-    startup: true //This is the new option
+    startup: true 
   }
 };
 
 var index = 0;
 var drawChart = function() {
                     if (index < result.length) {
-                        console.log(result[index]);
                         data.addRow(result[index++]);
                         chart.draw(data, options);
                     }
@@ -261,7 +260,11 @@ data.addRows(result);
 
 var options = {
   backgroundColor: 'transparent',
-  legend: {textStyle: {color: 'white'}}
+  legend: {textStyle: {color: 'white'}},
+  animation:{
+        duration: 1000,
+        easing: 'out' 
+  }
 };
 
 var chart = new google.visualization.PieChart(document.getElementById('piechart_CO2'));
